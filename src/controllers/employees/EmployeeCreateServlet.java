@@ -46,7 +46,7 @@ public class EmployeeCreateServlet extends HttpServlet {
             e.setName(request.getParameter("name"));
             e.setPassword(
                     EncryptUtil.getPasswordEncrypt(
-                            request.getParameter("passwrod"),
+                            request.getParameter("password"),
                             (String)this.getServletContext().getAttribute("salt")
                             )
                     );
