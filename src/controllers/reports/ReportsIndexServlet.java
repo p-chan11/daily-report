@@ -38,27 +38,29 @@ public class ReportsIndexServlet extends HttpServlet {
         int page;
         try{
             page = Integer.parseInt(request.getParameter("page"));
-        } catch(Exception e){
+        } catch(Exception e) {
             page = 1;
         }
         List<Report> reports = em.createNamedQuery("getAllReports", Report.class)
-                                 .setFirstResult(15 * (page - 1))
-                                 .setMaxResults(15)
-                                 .getResultList();
+                                  .setFirstResult(15 * (page - 1))
+                                  .setMaxResults(15)
+                                  .getResultList();
+
         long reports_count = (long)em.createNamedQuery("getReportsCount", Long.class)
                                      .getSingleResult();
+
         em.close();
 
-        request.setAttribute("repots", reports);
+        request.setAttribute("reports", reports);
         request.setAttribute("reports_count", reports_count);
         request.setAttribute("page", page);
-        if(request.getSession().getAttribute("flush") != null){
+        if(request.getSession().getAttribute("flush") != null) {
             request.setAttribute("flush", request.getSession().getAttribute("flush"));
             request.getSession().removeAttribute("flush");
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/index.jsp");
         rd.forward(request, response);
-
     }
+
 }
